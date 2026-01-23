@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+          name="description"
+          content="Daniil Katulevskiy's Portfolio Projects"
+  />
+  <meta name="author" content="Daniil Katulevskiy" />
+  <title>Projects - Daniil Katulevskiy</title>
+  <!-- Load Montserrat from Google Fonts -->
+  <link
+          href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+          rel="stylesheet"
+  />
+  <link rel="stylesheet" href="styles.css" />
+  <script>
+    // Remove the no-js class if JavaScript is enabled
+    document.documentElement.classList.remove("no-js");
+  </script>
+</head>
+<body>
+<header>
+  <!-- Same header navigation as other pages -->
+  <nav>
+    <a href="#nav" class="nav-toggle-button">&#9776;</a>
+    <div id="nav" class="nav-menu">
+      <a href="#" class="nav-close">&times;</a>
+      <div class="nav-links">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="projects.html" class="active">Projects</a></li>
+          <li><a href="resume.html">Resume</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="experiments.html">Experiments</a></li>
+        </ul>
+      </div>
+      <div class="nav-extras">
+        <button
+                id="theme-toggle"
+                aria-label="Toggle dark/light theme"
+                class="theme-toggle"
+        ></button>
+        <ul class="social-links">
+          <li class="social-link">
+            <a href="https://katul-portfolio.netlify.app/" target="_blank">
+              <img
+                      src="assets/netlify-logo.webp"
+                      alt="Netlify Logo"
+                      class="nav-icon"
+              />
+            </a>
+          </li>
+          <li class="social-link">
+            <a
+                    href="https://github.com/katulevskiy/cse134-hw3"
+                    target="_blank"
+            >
+              <img
+                      src="assets/github-logo.webp"
+                      alt="GitHub Logo"
+                      class="nav-icon"
+              />
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <section class="projects-section">
+    <h1>Projects</h1>
+
+    <!-- Data loading buttons -->
+    <div class="data-loading-controls">
+      <button id="load-local" class="data-btn">Load Local</button>
+      <button id="load-remote" class="data-btn">Load Remote</button>
+    </div>
+
+    <!-- Container for dynamically loaded project cards -->
+    <div id="projects-container" style="margin-top: 3rem">
+      <!-- Loading indicator (will be removed once projects load) -->
+      <p id="loading-indicator">Select a data source to load projects...</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <address>
+    Contact:
+    <a href="mailto:dkatulevskiy@ucsd.edu">dkatulevskiy@ucsd.edu</a>
+  </address>
+  <p>&copy; 2025 Daniil Katulevskiy - Portfolio</p>
+</footer>
+
+<!-- Load custom element definition first -->
+<script src="project-card.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const loadLocalBtn = document.getElementById('load-local');
+    const loadRemoteBtn = document.getElementById('load-remote');
+    const projectsContainer = document.getElementById('projects-container');
+    const loadingIndicator = document.getElementById('loading-indicator');
+
+    // Function to update loading indicator
+    function updateLoadingIndicator(message) {
+      loadingIndicator.textContent = message;
+      loadingIndicator.style.display = 'block';
+    }
+
+    // Function to hide loading indicator
+    function hideLoadingIndicator() {
+      loadingIndicator.style.display = 'none';
+    }
+
+    // Function to load projects from localStorage
+    function loadProjectsFromLocalStorage() {
+      try {
+        const projects = JSON.parse(localStorage.getItem("portfolio-projects")) || [];
+        return projects;
+      } catch (e) {
+        console.error("Error loading projects from localStorage:", e);
+        return [];
+      }
+    }
+
+    // Function to render projects to the container
+    function renderProjects(projects, container, isInitialLoad = true) {
+      // If container doesn't exist, exit early
+      if (!container) return;
+
+      // If this is the initial load, clear any existing cards
+      if (isInitialLoad) {
+        container.innerHTML = '';
+        container.appendChild(loadingIndicator);
+      }
+
+      // Add project cards with a slight delay between each for a staggered animation effect
+      projects.forEach((project, index) => {
+        setTimeout(
+                () => {
+                  const card = document.createElement("project-card");
+
+                  // Add ID to track which projects are already rendered
+                  card.setAttribute("id", `project-${project.id}`);
+
+                  // Set all project details as attributes
+                  Object.keys(project).forEach((key) => {
+                    if (project[key] !== undefined && project[key] !== null) {
+                      card.setAttribute(key, project[key]);
+                    }
+                  });
+
+                  // Force browser to recalculate styles
+                  void card.offsetWidth;
+
+                  // Append to container
+                  container.appendChild(card);
+                },
+                index * (isInitialLoad ? 50 : 100)
+        ); // Faster animation for initial load
+      });
+
+      // If no projects and this is initial load, show a message
+      if (projects.length === 0 && isInitialLoad) {
+        const noProjectsMsg = document.createElement("p");
+        noProjectsMsg.textContent = "No projects found.";
+        noProjectsMsg.style.textAlign = "center";
+        noProjectsMsg.style.padding = "2rem";
+        container.appendChild(noProjectsMsg);
+      }
+    }
+
+    // Load projects from local storage
+    loadLocalBtn.addEventListener('click', function() {
+      updateLoadingIndicator('Loading projects from local storage...');
+
+      // Clear existing projects
+      projectsContainer.innerHTML = '';
+      projectsContainer.appendChild(loadingIndicator);
+
+      // Get projects from localStorage
+      const projects = loadProjectsFromLocalStorage();
+
+      setTimeout(() => {
+        if (projects.length === 0) {
+          updateLoadingIndicator('No projects found in local storage. Try clicking "Load Remote" first to populate local storage.');
+        } else {
+          hideLoadingIndicator();
+          renderProjects(projects, projectsContainer);
+        }
+      }, 500); // Small delay for better UX
+    });
+
+    // Load projects from remote server (JSONBin)
+    loadRemoteBtn.addEventListener('click', function() {
+      updateLoadingIndicator('Loading projects from remote server...');
+
+      // Clear existing projects
+      projectsContainer.innerHTML = '';
+      projectsContainer.appendChild(loadingIndicator);
+
+      // Using JSONBin API with the provided bin ID - for readonly access
+      const jsonbinEndpoint = 'https://api.jsonbin.io/v3/b/67d630298960c979a572644d/latest';
+
+      fetch(jsonbinEndpoint)
+              .then(response => {
+                if (!response.ok) {
+                  throw new Error('Network response was not ok');
+                }
+                return response.json();
+              })
+              .then(data => {
+                // JSONBin returns data in { record: [...], metadata: {...} } format
+                const projects = data.record || [];
+
+                hideLoadingIndicator();
+                renderProjects(projects, projectsContainer);
+
+                // Save to localStorage for future use
+                localStorage.setItem('portfolio-projects', JSON.stringify(projects));
+              })
+              .catch(error => {
+                console.error('Error fetching remote projects:', error);
+
+                // If JSONBin fails, try loading local projects.json as fallback
+                fetch('projects.json')
+                        .then(response => {
+                          if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                          }
+                          return response.json();
+                        })
+                        .then(projects => {
+                          hideLoadingIndicator();
+                          renderProjects(projects, projectsContainer);
+
+                          // Save to localStorage for future use
+                          localStorage.setItem('portfolio-projects', JSON.stringify(projects));
+                        })
+                        .catch(fallbackError => {
+                          console.error('Error fetching fallback projects:', fallbackError);
+                          updateLoadingIndicator('Failed to load projects. Please check your internet connection and try again later.');
+
+                          // Add a retry button for better user experience
+                          const retryBtn = document.createElement('button');
+                          retryBtn.textContent = 'Retry';
+                          retryBtn.className = 'data-btn';
+                          retryBtn.style.marginTop = '1rem';
+                          retryBtn.addEventListener('click', () => loadRemoteBtn.click());
+                          loadingIndicator.appendChild(retryBtn);
+                        });
+              });
+    });
+
+    // Initial setup - show the prompt to select a data source
+    updateLoadingIndicator('Select a data source to load projects...');
+  });
+</script>
+
+<script>
+  // Theme toggle script (same as in your other pages)
+  (function () {
+    const toggleButton = document.getElementById("theme-toggle");
+    // Retrieve the saved theme from localStorage, default to light
+    let theme = localStorage.getItem("theme") || "light";
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+      toggleButton.textContent = "🌞"; // Clicking will switch to light
+    } else {
+      document.documentElement.classList.remove("dark");
+      toggleButton.textContent = "🌙"; // Clicking will switch to dark
+    }
+
+    toggleButton.addEventListener("click", () => {
+      if (document.documentElement.classList.contains("dark")) {
+        document.documentElement.classList.remove("dark");
+        localStorage.setItem("theme", "light");
+        toggleButton.textContent = "🌙";
+      } else {
+        document.documentElement.classList.add("dark");
+        localStorage.setItem("theme", "dark");
+        toggleButton.textContent = "🌞";
+      }
+    });
+  })();
+</script>
+</body>
+</html>

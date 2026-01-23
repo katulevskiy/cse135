@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="About Daniil Katulevskiy" />
+    <meta name="author" content="Daniil Katulevskiy" />
+    <title>About - Daniil Katulevskiy</title>
+    <!-- Load Montserrat from Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      /* CSS-only image carousel */
+      .carousel {
+        position: relative;
+        width: 100%;
+        max-width: 600px;
+        margin: 2rem auto;
+        overflow: hidden;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+      }
+      .carousel img {
+        width: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        opacity: 0;
+        animation: carouselAnimation 9s infinite;
+      }
+      .carousel img:nth-child(1) {
+        animation-delay: 0s;
+      }
+      .carousel img:nth-child(2) {
+        animation-delay: 3s;
+      }
+      .carousel img:nth-child(3) {
+        animation-delay: 6s;
+      }
+      @keyframes carouselAnimation {
+        0% {
+          opacity: 0;
+        }
+        8% {
+          opacity: 1;
+        }
+        33% {
+          opacity: 1;
+        }
+        41% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="#nav" class="nav-toggle-button">&#9776;</a>
+        <div id="nav" class="nav-menu">
+          <a href="#" class="nav-close">&times;</a>
+          <div class="nav-links">
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="about.html" class="active">About</a></li>
+              <li><a href="projects.html">Projects</a></li>
+              <li><a href="resume.html">Resume</a></li>
+              <li><a href="contact.html">Contact</a></li>
+              <li><a href="experiments.html">Experiments</a></li>
+            </ul>
+          </div>
+          <div class="nav-extras">
+            <!-- Theme toggle button (shows only when JS is enabled) -->
+            <button
+              id="theme-toggle"
+              aria-label="Toggle dark/light theme"
+              class="theme-toggle"
+            ></button>
+            <ul class="social-links">
+              <li class="social-link">
+                <a href="https://katul-portfolio.netlify.app/" target="_blank">
+                  <img
+                    src="assets/netlify-logo.webp"
+                    alt="Netlify Logo"
+                    class="nav-icon"
+                  />
+                </a>
+              </li>
+              <li class="social-link">
+                <a
+                  href="https://github.com/katulevskiy/cse134-hw3"
+                  target="_blank"
+                >
+                  <img
+                    src="assets/github-logo.webp"
+                    alt="GitHub Logo"
+                    class="nav-icon"
+                  />
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="about-section" style="padding: 2rem; text-align: center">
+        <h1>About Me</h1>
+        <p style="max-width: 800px; margin: 1rem auto">
+          I am Daniil Katulevskiy, a passionate web developer and designer with
+          experience in creating dynamic and responsive web applications. My
+          work focuses on clean design, modern technology, and a user-first
+          approach. I enjoy transforming ideas into engaging digital
+          experiences.
+        </p>
+        <div class="carousel">
+          <img src="assets/person1.jpg" alt="Portrait 1" />
+          <img src="assets/person2.jpg" alt="Portrait 2" />
+          <img src="assets/person3.jpg" alt="Portrait 3" />
+        </div>
+      </section>
+
+      <!-- GitHub Profile Section -->
+      <section
+        class="github-section"
+        style="padding: 2rem; text-align: center; margin-top: 2rem"
+      >
+        <h2>My GitHub</h2>
+
+        <!-- GitHub Profile Embed -->
+        <div class="github-embed">
+          <!-- GitHub Profile Card -->
+          <div class="github-card-wrapper">
+            <iframe
+              src="https://github-readme-stats.vercel.app/api?username=katulevskiy&show_icons=true&theme=default&hide_border=true"
+              frameborder="0"
+              scrolling="no"
+              width="100%"
+              height="200"
+              class="github-stats-card"
+            >
+            </iframe>
+
+            <!-- GitHub Top Languages Card -->
+            <iframe
+              src="https://github-readme-stats.vercel.app/api/top-langs/?username=katulevskiy&layout=compact&theme=default&hide_border=true"
+              frameborder="0"
+              scrolling="no"
+              width="100%"
+              height="200"
+              class="github-langs-card"
+            >
+            </iframe>
+          </div>
+
+          <!-- GitHub Calendar -->
+          <div class="github-calendar-wrapper">
+            <h3>My Contribution Activity</h3>
+            <img
+              src="https://ghchart.rshah.org/katulevskiy"
+              alt="GitHub Contribution Calendar"
+              class="github-calendar"
+            />
+          </div>
+        </div>
+
+        <div class="github-profile-actions">
+          <a
+            href="https://github.com/katulevskiy"
+            target="_blank"
+            class="github-btn"
+            >Visit My GitHub Profile</a
+          >
+          <a
+            href="https://github.com/katulevskiy?tab=repositories"
+            target="_blank"
+            class="github-btn"
+            >View All Repositories</a
+          >
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <address>
+        Contact:
+        <a href="mailto:dkatulevskiy@ucsd.edu">dkatulevskiy@ucsd.edu</a>
+      </address>
+      <p>&copy; 2025 Daniil Katulevskiy - Portfolio</p>
+    </footer>
+
+    <script>
+      (function () {
+        const toggleButton = document.getElementById("theme-toggle");
+        // Retrieve the saved theme from localStorage, default to light
+        let theme = localStorage.getItem("theme") || "light";
+        if (theme === "dark") {
+          document.documentElement.classList.add("dark");
+          toggleButton.textContent = "🌞"; // Clicking will switch to light
+        } else {
+          document.documentElement.classList.remove("dark");
+          toggleButton.textContent = "🌙"; // Clicking will switch to dark
+        }
+
+        toggleButton.addEventListener("click", () => {
+          if (document.documentElement.classList.contains("dark")) {
+            document.documentElement.classList.remove("dark");
+            localStorage.setItem("theme", "light");
+            toggleButton.textContent = "🌙";
+          } else {
+            document.documentElement.classList.add("dark");
+            localStorage.setItem("theme", "dark");
+            toggleButton.textContent = "🌞";
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>

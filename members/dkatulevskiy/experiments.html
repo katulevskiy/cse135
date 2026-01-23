@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Experiments and demonstrations of various HTML elements."
+    />
+    <meta name="author" content="Daniil Katulevskiy" />
+    <title>Experiments – Daniil Katulevskiy's Portfolio</title>
+    <!-- Load Montserrat from Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      /* Only experimental element specific styles remain */
+      dialog {
+        border: 1px solid black;
+        padding: 1em;
+      }
+    </style>
+    <!-- Define the Hello World custom element -->
+    <script>
+      class HelloWorld extends HTMLElement {
+        constructor() {
+          super();
+          console.log("Hello world from experiments!");
+        }
+      }
+      customElements.define("hello-world", HelloWorld);
+    </script>
+  </head>
+  <body>
+    <!-- Consistent Header -->
+    <header>
+      <nav>
+        <a href="#nav" class="nav-toggle-button">&#9776;</a>
+        <div id="nav" class="nav-menu">
+          <a href="#" class="nav-close">&times;</a>
+          <div class="nav-links">
+            <ul>
+              <li><a href="index.html" class="active">Home</a></li>
+              <li><a href="about.html">About</a></li>
+              <li><a href="projects.html">Projects</a></li>
+              <li><a href="resume.html">Resume</a></li>
+              <li><a href="contact.html">Contact</a></li>
+              <li><a href="experiments.html">Experiments</a></li>
+            </ul>
+          </div>
+          <div class="nav-extras">
+            <!-- Theme toggle button (shows only when JS is enabled) -->
+            <button
+              id="theme-toggle"
+              aria-label="Toggle dark/light theme"
+              class="theme-toggle"
+            ></button>
+            <ul class="social-links">
+              <li class="social-link">
+                <a href="https://katul-portfolio.netlify.app/" target="_blank">
+                  <img
+                    src="assets/netlify-logo.webp"
+                    alt="Netlify Logo"
+                    class="nav-icon"
+                  />
+                </a>
+              </li>
+              <li class="social-link">
+                <a
+                  href="https://github.com/katulevskiy/cse134-hw3"
+                  target="_blank"
+                >
+                  <img
+                    src="assets/github-logo.webp"
+                    alt="GitHub Logo"
+                    class="nav-icon"
+                  />
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+      <section>
+        <h2>HTML Elements Demonstration</h2>
+        <hr />
+
+        <h3>Grouped Headings</h3>
+        <hgroup>
+          <h2>Main Grouped Heading</h2>
+          <p>Supporting description for the heading.</p>
+        </hgroup>
+
+        <hr />
+        <h3>Canvas & SVG</h3>
+        <canvas id="expCanvas" width="100" height="100"></canvas>
+        <svg width="100" height="100">
+          <circle
+            cx="50"
+            cy="50"
+            r="40"
+            stroke="black"
+            stroke-width="3"
+            fill="red"
+          />
+        </svg>
+        <hr />
+
+        <h3>Audio & Video</h3>
+        <audio controls>
+          <source src="exp.mp3" type="audio/mpeg" />
+          Your browser does not support the audio element.
+        </audio>
+        <video controls width="320">
+          <source src="exp.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+        <hr />
+
+        <h3>Table Example</h3>
+        <table>
+          <caption>
+            Sample Data Table
+          </caption>
+          <colgroup>
+            <col style="background-color: #f2f2f2" />
+            <col style="background-color: #ffffff" />
+          </colgroup>
+          <thead>
+            <tr>
+              <th>Header 1</th>
+              <th>Header 2</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Data 1</td>
+              <td>Data 2</td>
+            </tr>
+            <tr>
+              <td>Data 3</td>
+              <td>Data 4</td>
+            </tr>
+          </tbody>
+        </table>
+        <hr />
+
+        <h3>Form Elements</h3>
+        <form action="#" method="post">
+          <fieldset>
+            <legend>Contact Form</legend>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" />
+            <br />
+            <label for="message">Message:</label>
+            <textarea id="message" name="message"></textarea>
+            <br />
+            <button type="submit">Submit</button>
+          </fieldset>
+        </form>
+        <hr />
+
+        <h3>Details & Summary</h3>
+        <details>
+          <summary>More Information</summary>
+          <p>This is additional information that can be toggled.</p>
+        </details>
+        <hr />
+
+        <h3>Dialog Element</h3>
+        <dialog open>
+          <p>This is a dialog box.</p>
+          <button onclick="this.parentElement.close()">Close</button>
+        </dialog>
+        <hr />
+
+        <h3>Template Element</h3>
+        <template id="tmpl">
+          <p>This is template content that is not rendered.</p>
+        </template>
+        <hr />
+
+        <h3>Text Formatting</h3>
+        <p>
+          This text includes <b>bold</b>, <i>italic</i>,
+          <strong>strong</strong>, and <em>emphasized</em> text.
+        </p>
+        <pre>
+function example() {
+    console.log("Preformatted text");
+}
+        </pre>
+        <hr />
+
+        <h3>Blockquote & Citation</h3>
+        <blockquote cite="https://www.example.com">
+          "This is a blockquote example."
+          <footer><cite>— Example Source</cite></footer>
+        </blockquote>
+        <p>
+          This is an <ins>inserted text</ins> and a <del>deleted text</del>.
+        </p>
+        <hr />
+
+        <h3>MathML Example</h3>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <mi>E</mi>
+          <mo>=</mo>
+          <mi>m</mi>
+          <msup>
+            <mi>c</mi>
+            <mn>2</mn>
+          </msup>
+        </math>
+        <p>
+          Note: MathML is not widely used in production due to inconsistent
+          browser support.
+        </p>
+        <hr />
+      </section>
+
+      <hr />
+      <h3>Additional HTML Elements</h3>
+
+      <p>
+        The term <abbr title="Hypertext Markup Language">HTML</abbr> is widely
+        used in web development.
+      </p>
+
+      <!-- Inline Code Example -->
+      <p>
+        To print a message in JavaScript, use:
+        <code>console.log("Hello World");</code>
+      </p>
+
+      <!-- Definition List Example -->
+      <dl>
+        <dt>HTML</dt>
+        <dd>The standard markup language for creating web pages.</dd>
+        <dt>CSS</dt>
+        <dd>
+          A stylesheet language used for describing the presentation of a
+          document written in HTML.
+        </dd>
+      </dl>
+
+      <!-- Keyboard Input Example -->
+      <p>To copy text, press <kbd>Ctrl</kbd> + <kbd>C</kbd>.</p>
+
+      <!-- Iframe Example -->
+      <h4>Embedded Site</h4>
+      <iframe
+        src="https://www.example.com"
+        width="300"
+        height="200"
+        title="Embedded Example"
+      ></iframe>
+
+      <h4>Form Elements</h4>
+      <form>
+        <label for="dropdown">Choose an option:</label>
+        <select id="dropdown">
+          <optgroup label="Group 1">
+            <option value="1">Option 1</option>
+            <option value="2">Option 2</option>
+          </optgroup>
+          <optgroup label="Group 2">
+            <option value="3">Option 3</option>
+            <option value="4">Option 4</option>
+          </optgroup>
+        </select>
+
+        <label for="datalist-example">Choose from list:</label>
+        <input list="datalist-options" id="datalist-example" />
+        <datalist id="datalist-options">
+          <option value="Option A"></option>
+          <option value="Option B"></option>
+        </datalist>
+      </form>
+
+      <noscript
+        >Your browser does not support JavaScript or JavaScript is
+        disabled.</noscript
+      >
+
+      <hr />
+      <h3>Additional Missing HTML Elements</h3>
+
+      <aside>
+        <h4>Related Information</h4>
+        <p>This is some additional context related to the main content.</p>
+      </aside>
+
+      <p>
+        The term <dfn>Web Accessibility</dfn> refers to the inclusive practice
+        of removing barriers that prevent interaction with, or access to,
+        websites.
+      </p>
+
+      <h4>Responsive Image Example</h4>
+      <picture>
+        <source srcset="example.webp" type="image/webp" />
+        <source srcset="example.jpg" type="image/jpeg" />
+        <img src="example.jpg" alt="Example image in different formats" />
+      </picture>
+
+      <h4>Audio with Multiple Sources</h4>
+      <audio controls>
+        <source src="example.ogg" type="audio/ogg" />
+        <source src="example.mp3" type="audio/mpeg" />
+        Your browser does not support the audio element.
+      </audio>
+
+      <h4>Template Element</h4>
+      <template id="card-template">
+        <div class="card">
+          <h3>Title</h3>
+          <p>
+            This content is inside a template and will be rendered dynamically.
+          </p>
+        </div>
+      </template>
+    </main>
+
+    <!-- Consistent Footer -->
+    <footer>
+      <address>
+        Contact:
+        <a href="mailto:dkatulevskiy@ucsd.edu">dkatulevskiy@ucsd.edu</a>
+      </address>
+      <p>&copy; 2025 Daniil Katulevskiy - Portfolio</p>
+    </footer>
+
+    <script>
+      const expCanvas = document.getElementById("expCanvas");
+      if (expCanvas && expCanvas.getContext) {
+        const ctx = expCanvas.getContext("2d");
+        ctx.fillStyle = "blue";
+        ctx.fillRect(20, 20, 60, 60);
+      }
+    </script>
+
+    <script>
+      (function () {
+        const toggleButton = document.getElementById("theme-toggle");
+        // Retrieve the saved theme from localStorage, default to light
+        let theme = localStorage.getItem("theme") || "light";
+        if (theme === "dark") {
+          document.documentElement.classList.add("dark");
+          toggleButton.textContent = "🌞"; // Clicking will switch to light
+        } else {
+          document.documentElement.classList.remove("dark");
+          toggleButton.textContent = "🌙"; // Clicking will switch to dark
+        }
+
+        toggleButton.addEventListener("click", () => {
+          if (document.documentElement.classList.contains("dark")) {
+            document.documentElement.classList.remove("dark");
+            localStorage.setItem("theme", "light");
+            toggleButton.textContent = "🌙";
+          } else {
+            document.documentElement.classList.add("dark");
+            localStorage.setItem("theme", "dark");
+            toggleButton.textContent = "🌞";
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>

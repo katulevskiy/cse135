@@ -1,0 +1,1567 @@
+/* =========================================================
+   CSS Variables, Custom Fonts, Layout, Animations, Media Queries
+   ========================================================= */
+
+/* --------------------------------
+   CSS Variables with fallback
+   -------------------------------- */
+:root {
+  --primary-color: #3c78d8;
+  --accent-color: #c05050;
+  --bg-color: #f2f2f2;
+  --font-primary: "Montserrat", Arial, sans-serif;
+  --text-color: #333; /* default text color for light mode */
+  /* Use color-mix for a gradient effect if supported */
+  --gradient-color: color-mix(in srgb, #3c78d8 50%, #c05050 50%);
+  --card-bg: #fff;
+  --card-border: #ddd;
+}
+
+/* --------------------------------
+   Base Styles
+   -------------------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-primary);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+/* --------------------------------
+   Header & Navigation (common to all pages)
+   -------------------------------- */
+header {
+  background-color: var(--primary-color);
+  padding: 1rem;
+}
+
+header nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+header nav ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+/* Active and hover styling for light mode */
+header nav ul li a.active,
+header nav ul li a:hover {
+  color: var(--accent-color);
+}
+
+/* Social icon styling */
+.social-link .nav-icon {
+  width: 24px;
+  height: auto;
+  vertical-align: middle;
+}
+
+/* Desktop navigation styling */
+.nav-menu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0 1rem;
+}
+
+.nav-links {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.nav-extras {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.nav-toggle-button {
+  display: none;
+}
+
+/* Hide the close button by default */
+.nav-close {
+  display: none;
+}
+
+/* Invert GitHub and Netlify icons in dark mode */
+.dark .social-link .nav-icon {
+  filter: invert(1); /* This inverts the colors of the image */
+  transition: filter 0.3s ease; /* Smooth transition when theme changes */
+}
+
+/* Optional: add a slight hover effect */
+.dark .social-link:hover .nav-icon {
+  opacity: 0.8;
+}
+
+project-card {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+/* ---------- Theme Toggle Button ---------- */
+.theme-toggle {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--text-color);
+}
+
+/* Hide theme toggle if JavaScript is disabled */
+.no-js #theme-toggle {
+  display: none;
+}
+
+/* --------------------------------
+   Responsive Navigation for Small Screens
+   -------------------------------- */
+@media (max-width: 768px) {
+  header {
+    background-color: var(--primary-color);
+    min-height: 60px;
+    position: relative;
+  }
+  .nav-toggle-button {
+    display: block;
+    font-size: 2rem;
+    color: #fff;
+    text-decoration: none;
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-50%);
+    z-index: 200;
+  }
+  .nav-menu {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--primary-color);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+  }
+  .nav-menu:target {
+    display: flex;
+  }
+  .nav-menu ul {
+    list-style: none;
+    text-align: center;
+    padding: 0;
+  }
+  .nav-menu li {
+    margin: 1rem 0;
+  }
+  .nav-close {
+    display: block;
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    font-size: 2rem;
+    color: #fff;
+    text-decoration: none;
+    z-index: 300;
+  }
+}
+
+/* --------------------------------
+   Hero Section
+   -------------------------------- */
+.hero {
+  background: url("assets/person.webp") no-repeat center center;
+  background-size: cover;
+  width: 100%;
+  height: 100vh; /* Full viewport height */
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-content h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.hero-content h2 {
+  font-size: 2rem;
+}
+
+/* --------------------------------
+   Featured Project Section
+   -------------------------------- */
+.featured-project {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.featured-project h2 {
+  margin-bottom: 1rem;
+  font-size: 2rem;
+  /* For projects page, force header to white */
+  color: #fff;
+}
+
+.featured-project figure {
+  margin: 0 auto 1rem;
+  max-width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.featured-project figure img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
+
+.featured-project figcaption {
+  margin-top: 0.5rem;
+  font-style: italic;
+  color: #666;
+}
+
+.featured-project p {
+  font-size: 1rem;
+  margin: 1rem 0;
+}
+
+.featured-project .btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background: var(--primary-color);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+.featured-project .btn:hover {
+  background: color-mix(
+    in srgb,
+    var(--accent-color) 50%,
+    var(--primary-color) 50%
+  );
+}
+
+@media (max-width: 600px) {
+  .featured-project {
+    border-radius: 0;
+  }
+  .featured-project figure {
+    border-radius: 0;
+  }
+}
+
+/* --------------------------------
+   Projects Section (Index Page) - Grid Layout
+   -------------------------------- */
+.projects-grid {
+  padding: 2rem;
+  background-color: var(--bg-color);
+  text-align: center;
+}
+
+.projects-grid h2 {
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+  color: #000; /* black for light theme */
+  text-align: center;
+  padding: 1rem;
+}
+
+main {
+  padding: 2dvh 2dvw;
+}
+
+.projects-section h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  color: var(--primary-color);
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.project-tile {
+  text-decoration: none;
+  color: #333;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  overflow: hidden;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.project-tile img {
+  width: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+}
+
+.project-tile p {
+  padding: 1rem;
+  font-size: 1rem;
+}
+
+.project-tile:hover {
+  transform: translateY(-5px);
+  /* Ensure shadow is dark (and not white) */
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* --------------------------------
+   Projects Page Specific Styles (Article Layout)
+   -------------------------------- */
+.project {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 3rem;
+  padding: 1rem;
+  /*border: 1px solid #ddd;*/
+  /* Reserve left border space */
+  border-left: 5px solid transparent;
+  border-radius: 8px;
+  background: var(--card-bg);
+  overflow: hidden;
+  animation: slideIn 0.8s ease-out;
+}
+
+.project:hover {
+  /* Change left border on hover to yellow */
+  border-left-color: var(--accent-color);
+}
+
+.project:has(.github-link:hover) {
+  border-left-color: purple;
+}
+
+.project-description {
+  flex: 1 1 300px;
+  padding: 1rem;
+}
+
+.project-description h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.dark .projects-section h1 {
+  color: #fff;
+}
+
+.project-description p {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.dark article.project {
+}
+
+.github-link {
+  display: inline-block;
+  background: var(--gradient-color, #3c78d8);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+.github-link:hover {
+  background: color-mix(in srgb, #c05050 50%, #3c78d8 50%);
+}
+
+.project-image {
+  flex: 1 1 300px;
+  padding: 1rem;
+  text-align: center;
+}
+
+.project-image img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.project-image img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Data loading controls */
+.data-loading-controls {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.data-btn {
+  padding: 0.75rem 1.5rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  transition:
+    background-color 0.3s,
+    transform 0.2s;
+}
+
+.data-btn:hover {
+  background-color: var(--accent-color);
+  transform: translateY(-2px);
+}
+
+.data-btn:active {
+  transform: translateY(0);
+}
+
+/* Dark theme adjustments for buttons */
+.dark .data-btn {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  border: 2px solid var(--accent-color);
+}
+
+.dark .data-btn:hover {
+  background-color: var(--accent-color);
+  color: var(--primary-color);
+}
+
+/* --------------------------------
+   CRUD Page Styling
+   -------------------------------- */
+.crud-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.crud-section h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  color: var(--primary-color);
+}
+
+.dark .crud-section h1 {
+  color: var(--text-color);
+}
+
+/* Data source controls */
+.data-source-controls {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.data-source-controls .data-btn {
+  padding: 0.75rem 1.5rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  transition:
+    background-color 0.3s,
+    transform 0.2s;
+  opacity: 0.7;
+}
+
+.data-source-controls .data-btn.active {
+  opacity: 1;
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.data-source-controls .data-btn:hover {
+  background-color: var(--accent-color);
+  transform: translateY(-2px);
+}
+
+/* CRUD Tabs */
+.crud-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.crud-tab {
+  padding: 0.5rem 1.5rem;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  border: 1px solid var(--card-border);
+  border-radius: 4px 4px 0 0;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.crud-tab.active {
+  background-color: var(--card-bg);
+  border-bottom-color: var(--card-bg);
+  transform: translateY(-4px);
+}
+
+.crud-tab:hover:not(.active) {
+  background-color: var(--card-border);
+}
+
+/* CRUD Panels */
+.crud-panel {
+  display: none;
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.crud-panel.active {
+  display: block;
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.crud-panel h2 {
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  color: var(--primary-color);
+  border-bottom: 1px solid var(--card-border);
+  padding-bottom: 0.5rem;
+}
+
+.dark .crud-panel h2 {
+  color: var(--accent-color);
+}
+
+/* Project Form */
+.project-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  padding: 0.75rem;
+  border: 1px solid var(--card-border);
+  border-radius: 4px;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: var(--font-primary);
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: var(--primary-color);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(60, 120, 216, 0.2);
+}
+
+.dark .form-group input:focus,
+.dark .form-group textarea:focus,
+.dark .form-group select:focus {
+  box-shadow: 0 0 0 2px rgba(255, 183, 77, 0.2);
+}
+
+.form-row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.form-group.half {
+  flex: 1 1 calc(50% - 0.5rem);
+  min-width: 250px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+/* CRUD Buttons */
+.crud-btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: var(--font-primary);
+}
+
+.create-btn,
+.update-btn {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.create-btn:hover,
+.update-btn:hover {
+  background-color: var(--accent-color);
+  transform: translateY(-2px);
+}
+
+.delete-btn {
+  background-color: #dc3545;
+  color: white;
+}
+
+.delete-btn:hover {
+  background-color: #bd2130;
+  transform: translateY(-2px);
+}
+
+.delete-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.reset-btn,
+.cancel-btn {
+  background-color: #6c757d;
+  color: white;
+}
+
+.reset-btn:hover,
+.cancel-btn:hover {
+  background-color: #5a6268;
+  transform: translateY(-2px);
+}
+
+/* Projects List */
+.project-filter {
+  margin-bottom: 1.5rem;
+}
+
+.project-filter input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--card-border);
+  border-radius: 4px;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.projects-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.project-card {
+  background-color: var(--bg-color);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  overflow: hidden;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.project-card-header {
+  padding: 1rem;
+  border-bottom: 1px solid var(--card-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.project-card-title {
+  font-weight: bold;
+  margin: 0;
+  color: var(--primary-color);
+}
+
+.dark .project-card-title {
+  color: var(--accent-color);
+}
+
+.project-card-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.action-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: var(--text-color);
+  transition: color 0.3s ease;
+}
+
+.action-btn.edit:hover {
+  color: var(--primary-color);
+}
+
+.action-btn.delete:hover {
+  color: #dc3545;
+}
+
+.project-card-body {
+  padding: 1rem;
+}
+
+.project-card-desc {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.project-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  font-size: 0.8rem;
+}
+
+.meta-tag {
+  background-color: rgba(60, 120, 216, 0.1);
+  color: var(--primary-color);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+.dark .meta-tag {
+  background-color: rgba(255, 183, 77, 0.1);
+  color: var(--accent-color);
+}
+
+/* Project Selector */
+.project-selector {
+  margin-bottom: 2rem;
+}
+
+.project-selector label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: var(--text-color);
+}
+
+.project-selector select {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid var(--card-border);
+  border-radius: 4px;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: var(--font-primary);
+}
+
+/* Delete Warning */
+.delete-warning {
+  background-color: rgba(220, 53, 69, 0.1);
+  border-left: 4px solid #dc3545;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  border-radius: 0 4px 4px 0;
+}
+
+.delete-warning p {
+  margin: 0;
+  color: #dc3545;
+}
+
+.dark .delete-warning {
+  background-color: rgba(220, 53, 69, 0.2);
+}
+
+/* Delete Preview */
+.delete-preview {
+  background-color: var(--bg-color);
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 2rem;
+}
+
+.delete-preview.empty {
+  display: none;
+}
+
+.preview-title {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: var(--primary-color);
+}
+
+.dark .preview-title {
+  color: var(--accent-color);
+}
+
+.preview-description {
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+
+.preview-meta {
+  font-size: 0.9rem;
+  color: var(--text-color);
+  opacity: 0.8;
+}
+
+/* Notification */
+.notification {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background-color: var(--card-bg);
+  border-left: 4px solid var(--primary-color);
+  padding: 1rem;
+  border-radius: 0 4px 4px 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 400px;
+  z-index: 1000;
+  animation: slideIn 0.3s ease;
+}
+
+.notification.error {
+  border-left-color: #dc3545;
+}
+
+.notification.success {
+  border-left-color: #28a745;
+}
+
+.notification.hidden {
+  display: none;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--text-color);
+  opacity: 0.7;
+  transition: opacity 0.3s;
+}
+
+.close-btn:hover {
+  opacity: 1;
+}
+
+/* Loading placeholder */
+.loading-placeholder {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-color);
+  opacity: 0.7;
+}
+
+/* Dark mode adjustments for CRUD */
+.dark .crud-btn {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  border: 1px solid var(--accent-color);
+}
+
+.dark .crud-btn:hover {
+  background-color: var(--accent-color);
+  color: var(--primary-color);
+}
+
+.dark .delete-btn {
+  background-color: #dc3545;
+  border-color: #dc3545;
+  color: #fff;
+}
+
+.dark .delete-btn:hover {
+  background-color: #bd2130;
+  border-color: #bd2130;
+}
+
+.dark .reset-btn,
+.dark .cancel-btn {
+  background-color: #6c757d;
+  border-color: #6c757d;
+  color: #fff;
+}
+
+.dark .reset-btn:hover,
+.dark .cancel-btn:hover {
+  background-color: #5a6268;
+  border-color: #5a6268;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .crud-tabs {
+    flex-wrap: wrap;
+  }
+
+  .crud-tab {
+    flex: 1 1 calc(50% - 0.25rem);
+    text-align: center;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .form-actions button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .data-source-controls {
+    flex-direction: column;
+  }
+
+  .data-source-controls .data-btn {
+    width: 100%;
+  }
+}
+
+/* --------------------------------
+   CSS Animation using @keyframes
+   -------------------------------- */
+@keyframes slideIn {
+  from {
+    transform: translateX(20%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Responsive adjustments for Projects Page article layout */
+@media (max-width: 768px) {
+  .project {
+    flex-direction: column;
+  }
+  .project-description,
+  .project-image {
+    flex: 1 1 100%;
+  }
+}
+
+/* --------------------------------
+   Image Carousel
+   -------------------------------- */
+.carousel {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  height: 400px; /* Fixed height to make carousel visible */
+  margin: 2rem auto;
+  overflow: hidden;
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.carousel img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  animation: carouselAnimation 9s infinite;
+}
+
+.carousel img:nth-child(1) {
+  animation-delay: 0s;
+  opacity: 1; /* Make first image visible by default */
+}
+
+.carousel img:nth-child(2) {
+  animation-delay: 3s;
+}
+
+.carousel img:nth-child(3) {
+  animation-delay: 6s;
+}
+
+@keyframes carouselAnimation {
+  0% {
+    opacity: 0;
+  }
+  8% {
+    opacity: 1;
+  }
+  33% {
+    opacity: 1;
+  }
+  41% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Dark mode adjustments for carousel */
+.dark .carousel {
+  border-color: var(--card-border);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* GitHub Stats Horizontal Layout
+   This file contains styles to position GitHub stats and most used languages
+   cards horizontally side by side and centered on the page.
+   Uses CSS variables for theming compatibility.
+*/
+
+/* Ensure we're using the site's CSS variables */
+:root {
+  --gh-primary-color: var(--primary-color, #3c78d8);
+  --gh-accent-color: var(--accent-color, #c05050);
+  --gh-bg-color: var(--bg-color, #f2f2f2);
+  --gh-text-color: var(--text-color, #333);
+  --gh-card-bg: var(--card-bg, #fff);
+  --gh-card-border: var(--card-border, #ddd);
+}
+
+/* Container for GitHub embed content */
+.github-embed {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/* Wrapper for the stats cards with horizontal layout */
+.github-card-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin: 1.5rem auto;
+  width: 100%;
+}
+
+/* Individual stats cards styling */
+.github-stats-card,
+.github-langs-card {
+  flex: 0 0 48%;
+  max-width: 480px;
+  background-color: transparent !important; /* Force transparent background */
+  border: none !important; /* Remove any borders */
+  box-shadow: none !important; /* Remove any shadows */
+  overflow: visible;
+}
+
+/* Hover effects for cards - removed */
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .github-card-wrapper {
+    gap: 15px;
+  }
+}
+
+/* For smaller screens, stack the cards vertically */
+@media (max-width: 768px) {
+  .github-card-wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .github-stats-card,
+  .github-langs-card {
+    flex: none;
+    width: 100%;
+    margin-bottom: 15px;
+  }
+}
+
+/* Styling for GitHub profile action buttons */
+.github-profile-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin: 2rem auto 1rem;
+}
+
+.github-btn {
+  display: inline-block;
+  padding: 0.75rem 1.2rem;
+  background-color: var(--gh-primary-color);
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.github-btn:hover {
+  background-color: var(--gh-accent-color);
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.github-btn:active {
+  transform: translateY(-1px);
+}
+
+.github-btn.primary {
+  background-color: var(--gh-primary-color);
+}
+
+.github-btn.secondary {
+  background-color: var(--gh-accent-color);
+}
+
+.github-btn.outline {
+  background-color: transparent;
+  border: 2px solid var(--gh-primary-color);
+  color: var(--gh-primary-color);
+}
+
+.github-btn.outline:hover {
+  background-color: var(--gh-primary-color);
+  color: white;
+}
+
+/* Dark theme compatibility */
+.dark .github-stats-card,
+.dark .github-langs-card {
+  filter: invert(0.9) hue-rotate(180deg);
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.dark .github-btn {
+  background-color: var(--gh-primary-color);
+  color: var(--gh-text-color, white);
+}
+
+.dark .github-btn.outline {
+  border-color: var(--gh-accent-color);
+  color: var(--gh-accent-color);
+}
+
+.dark .github-btn.outline:hover {
+  background-color: var(--gh-accent-color);
+  color: var(--gh-primary-color);
+}
+
+/* --------------------------------
+   Resume Page Styling
+   -------------------------------- */
+.resume-section {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: var(--card-bg);
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.resume-section h1 {
+  color: var(--primary-color);
+  margin-bottom: 1.5rem;
+}
+
+.resume-section p {
+  margin-bottom: 2rem;
+  color: var(--text-color);
+}
+
+.resume-btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--primary-color);
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.resume-btn:hover {
+  background-color: var(--accent-color);
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.resume-btn:active {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+.pdf-embed {
+  margin-top: 2rem;
+  width: 100%;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.pdf-embed h2 {
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.pdf-embed iframe {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: box-shadow 0.3s ease;
+}
+
+.pdf-embed iframe:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Dark mode adjustments */
+.dark .resume-section {
+  background-color: var(--card-bg);
+}
+
+.dark .resume-section h1,
+.dark .pdf-embed h2 {
+  color: var(--accent-color);
+}
+
+.dark .resume-btn {
+  background-color: var(--accent-color);
+  color: #333;
+}
+
+.dark .resume-btn:hover {
+  background-color: #ffcc80; /* Lighter version of the accent color */
+}
+
+.dark .pdf-embed iframe {
+  border: 1px solid var(--card-border);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .resume-section {
+    padding: 1.5rem;
+  }
+
+  .pdf-embed iframe {
+    height: 600px;
+  }
+}
+
+@media (max-width: 480px) {
+  .pdf-embed iframe {
+    height: 500px;
+  }
+}
+
+/* --------------------------------
+   Footer
+   -------------------------------- */
+footer {
+  background-color: #444;
+  color: #fff;
+  padding: 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+footer address {
+  font-style: normal;
+  margin-bottom: 0.5rem;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  min-height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+main {
+  min-height: 0; /* Allows content to determine size */
+}
+
+/* --------------------------------
+   Global Media Queries for Typography Adjustments
+   -------------------------------- */
+@media (max-width: 600px) {
+  header nav ul {
+    flex-direction: column;
+  }
+  .hero-content h1 {
+    font-size: 2.5rem;
+  }
+  .hero-content h2 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 992px) {
+  .hero-content h1 {
+    font-size: 3rem;
+  }
+  .hero-content h2 {
+    font-size: 2rem;
+  }
+}
+
+@media (min-width: 993px) {
+  .hero-content h1 {
+    font-size: 3.5rem;
+  }
+  .hero-content h2 {
+    font-size: 2.5rem;
+  }
+}
+
+/* -------------------------------
+   Contact Form Styling
+   ------------------------------- */
+.contact-form {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #fff;
+  border: none;
+  border-radius: 8px;
+}
+
+.contact-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.contact-form button {
+  background: var(--primary-color);
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.contact-form button:hover {
+  background: var(--accent-color);
+}
+
+.contact-form output {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+}
+
+#error-output {
+  color: #c00;
+}
+
+#info-output {
+  color: #090;
+}
+
+.dark .contact-form {
+  background: var(--card-bg); /* Uses dark card background */
+  color: var(--text-color);
+}
+
+.dark .contact-form input,
+.dark .contact-form textarea {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  color: var(--text-color);
+}
+
+.dark .contact-form button {
+  /* Optionally adjust button text color if needed */
+  color: var(--text-color);
+}
+
+fieldset {
+  border: none;
+}
+
+/* -------------------------------
+   Dark Mode Overrides
+   ------------------------------- */
+.dark {
+  --primary-color: #1e1e1e;
+  --accent-color: #ffb74d;
+  --bg-color: #222;
+  --text-color: #f1f1f1;
+  --card-bg: #333;
+  --card-border: #444;
+}
+
+.dark body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.dark header {
+  background-color: var(--primary-color);
+}
+
+/* Ensure navigation links remain visible in dark mode */
+.dark header nav ul li a {
+  color: var(--text-color);
+}
+
+/* Restore active and hover styles for dark mode */
+.dark header nav ul li a.active,
+.dark header nav ul li a:hover {
+  color: var(--accent-color);
+}
+
+.dark .projects-grid h2 {
+  color: var(--text-color);
+}
+
+/* Featured Project Section */
+.dark .featured-project {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  color: var(--text-color);
+}
+.dark .featured-project h2 {
+  /* Force the featured project header to be light */
+  color: var(--text-color);
+}
+.dark .featured-project figcaption {
+  color: #ccc;
+}
+
+/* Project Tiles */
+.dark .project-tile {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  color: var(--text-color);
+}
+.dark .project-tile p {
+  color: var(--text-color);
+}
+
+/* Dark mode adjustments for contact form remain as inherited from base styles */

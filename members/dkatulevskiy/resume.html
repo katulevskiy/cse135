@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Daniil Katulevskiy's Portfolio" />
+    <meta name="author" content="Daniil Katulevskiy" />
+    <title>Your Page Title Here</title>
+    <!-- Load Montserrat from Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script>
+      // Remove the no-js class if JavaScript is enabled
+      document.documentElement.classList.remove("no-js");
+    </script>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="#nav" class="nav-toggle-button">&#9776;</a>
+        <div id="nav" class="nav-menu">
+          <a href="#" class="nav-close">&times;</a>
+          <div class="nav-links">
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="about.html">About</a></li>
+              <li><a href="projects.html">Projects</a></li>
+              <li><a href="resume.html" class="active">Resume</a></li>
+              <li><a href="contact.html">Contact</a></li>
+              <li><a href="experiments.html">Experiments</a></li>
+            </ul>
+          </div>
+          <div class="nav-extras">
+            <!-- Theme toggle button (shows only when JS is enabled) -->
+            <button
+              id="theme-toggle"
+              aria-label="Toggle dark/light theme"
+              class="theme-toggle"
+            ></button>
+            <ul class="social-links">
+              <li class="social-link">
+                <a href="https://katul-portfolio.netlify.app/" target="_blank">
+                  <img
+                    src="assets/netlify-logo.webp"
+                    alt="Netlify Logo"
+                    class="nav-icon"
+                  />
+                </a>
+              </li>
+              <li class="social-link">
+                <a
+                  href="https://github.com/katulevskiy/cse134-hw3"
+                  target="_blank"
+                >
+                  <img
+                    src="assets/github-logo.webp"
+                    alt="GitHub Logo"
+                    class="nav-icon"
+                  />
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="resume-section" style="padding: 2rem; text-align: center">
+        <h1>My Resume</h1>
+        <p style="max-width: 800px; margin: 1rem auto">
+          Click the button below to download my resume.
+        </p>
+        <a
+          href="assets/Daniil-Katulevskiy-CV-v2.pdf"
+          class="resume-btn"
+          download
+          >Download Resume</a
+        >
+
+        <div class="pdf-embed" style="margin-top: 2rem; max-width: 100%">
+          <h2>Preview</h2>
+          <iframe
+            src="assets/Daniil-Katulevskiy-CV-v2.pdf"
+            style="
+              width: 100%;
+              height: 800px;
+              border: 1px solid #ccc;
+              border-radius: 4px;
+            "
+            title="Daniil Katulevskiy's Resume"
+          ></iframe>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <address>
+        Contact:
+        <a href="mailto:dkatulevskiy@ucsd.edu">dkatulevskiy@ucsd.edu</a>
+      </address>
+      <p>&copy; 2025 Daniil Katulevskiy - Portfolio</p>
+    </footer>
+
+    <script>
+      (function () {
+        const toggleButton = document.getElementById("theme-toggle");
+        // Retrieve the saved theme from localStorage, default to light
+        let theme = localStorage.getItem("theme") || "light";
+        if (theme === "dark") {
+          document.documentElement.classList.add("dark");
+          toggleButton.textContent = "🌞"; // Clicking will switch to light
+        } else {
+          document.documentElement.classList.remove("dark");
+          toggleButton.textContent = "🌙"; // Clicking will switch to dark
+        }
+
+        toggleButton.addEventListener("click", () => {
+          if (document.documentElement.classList.contains("dark")) {
+            document.documentElement.classList.remove("dark");
+            localStorage.setItem("theme", "light");
+            toggleButton.textContent = "🌙";
+          } else {
+            document.documentElement.classList.add("dark");
+            localStorage.setItem("theme", "dark");
+            toggleButton.textContent = "🌞";
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>

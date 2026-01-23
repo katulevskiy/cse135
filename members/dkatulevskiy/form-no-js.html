@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Contact Daniil Katulevskiy" />
+    <meta name="author" content="Daniil Katulevskiy" />
+    <title>Contact (No JS Validation) - Daniil Katulevskiy</title>
+    <!-- Load Montserrat from Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="#nav" class="nav-toggle-button">&#9776;</a>
+        <div id="nav" class="nav-menu">
+          <a href="#" class="nav-close">&times;</a>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="resume.html">Resume</a></li>
+            <li><a href="contact.html" class="active">Contact</a></li>
+            <li><a href="experiments.html">Experiments</a></li>
+            <li class="social-link">
+              <a href="https://katul-portfolio.netlify.app/" target="_blank">
+                <img
+                  src="assets/netlify-logo.webp"
+                  alt="Netlify Logo"
+                  class="nav-icon"
+                />
+              </a>
+            </li>
+            <li class="social-link">
+              <a
+                href="https://github.com/katulevskiy/cse134-hw3"
+                target="_blank"
+              >
+                <img
+                  src="assets/github-logo.webp"
+                  alt="GitHub Logo"
+                  class="nav-icon"
+                />
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section
+        class="contact-section"
+        style="text-align: center; padding: 2rem"
+      >
+        <h1>Contact Me</h1>
+        <form
+          class="contact-form"
+          action="https://httpbin.org/post"
+          method="post"
+        >
+          <fieldset>
+            <label for="name">Name</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              required
+              pattern="[A-Za-z\s]+"
+              title="Only letters and spaces allowed"
+            />
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required />
+
+            <label for="subject">Subject</label>
+            <input
+              type="text"
+              id="subject"
+              name="subject"
+              pattern="[A-Za-z0-9\s.,'-]*"
+              title="Only letters, numbers, spaces, and basic punctuation allowed"
+            />
+
+            <label for="message">Message</label>
+            <textarea
+              id="message"
+              name="message"
+              rows="5"
+              required
+              minlength="10"
+              maxlength="500"
+            ></textarea>
+
+            <!-- Hidden field for bot detection, defaulting to false -->
+            <input type="hidden" name="possible_bot" value="false" />
+
+            <!-- Output elements for errors and info messages -->
+            <output id="error-output"></output>
+            <output id="info-output"></output>
+
+            <button type="submit">Send Message</button>
+          </fieldset>
+        </form>
+      </section>
+    </main>
+
+    <footer>
+      <address>
+        Contact:
+        <a href="mailto:dkatulevskiy@ucsd.edu">dkatulevskiy@ucsd.edu</a>
+      </address>
+      <p>&copy; 2025 Daniil Katulevskiy - Portfolio</p>
+    </footer>
+  </body>
+</html>

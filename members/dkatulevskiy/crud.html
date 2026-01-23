@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Project Management - Daniil Katulevskiy's Portfolio" />
+  <meta name="author" content="Daniil Katulevskiy" />
+  <title>Project Manager - Daniil Katulevskiy</title>
+  <!-- Load Montserrat from Google Fonts -->
+  <link
+          href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+          rel="stylesheet"
+  />
+  <link rel="stylesheet" href="styles.css" />
+  <script>
+    // Remove the no-js class if JavaScript is enabled
+    document.documentElement.classList.remove("no-js");
+  </script>
+</head>
+<body>
+<header>
+  <nav>
+    <a href="#nav" class="nav-toggle-button">&#9776;</a>
+    <div id="nav" class="nav-menu">
+      <a href="#" class="nav-close">&times;</a>
+      <div class="nav-links">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="resume.html">Resume</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="experiments.html">Experiments</a></li>
+          <li><a href="crud.html" class="active">Project Manager</a></li>
+        </ul>
+      </div>
+      <div class="nav-extras">
+        <button
+                id="theme-toggle"
+                aria-label="Toggle dark/light theme"
+                class="theme-toggle"
+        ></button>
+        <ul class="social-links">
+          <li class="social-link">
+            <a href="https://katul-portfolio.netlify.app/" target="_blank">
+              <img
+                      src="assets/netlify-logo.webp"
+                      alt="Netlify Logo"
+                      class="nav-icon"
+              />
+            </a>
+          </li>
+          <li class="social-link">
+            <a
+                    href="https://github.com/katulevskiy/cse134-hw3"
+                    target="_blank"
+            >
+              <img
+                      src="assets/github-logo.webp"
+                      alt="GitHub Logo"
+                      class="nav-icon"
+              />
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <section class="crud-section">
+    <h1>Project Manager</h1>
+
+    <!-- Data source selection -->
+    <div class="data-source-controls">
+      <button id="use-local" class="data-btn active">Use Local Storage</button>
+      <button id="use-remote" class="data-btn">Use Remote Storage</button>
+    </div>
+
+    <!-- CRUD operations tabs -->
+    <div class="crud-tabs">
+      <button id="tab-create" class="crud-tab active">Create</button>
+      <button id="tab-read" class="crud-tab">Read</button>
+      <button id="tab-update" class="crud-tab">Update</button>
+      <button id="tab-delete" class="crud-tab">Delete</button>
+    </div>
+
+    <!-- Create Project Form -->
+    <div id="create-form" class="crud-panel active">
+      <h2>Create New Project</h2>
+      <form id="project-form" class="project-form">
+        <div class="form-group">
+          <label for="project-id">Project ID *</label>
+          <input type="text" id="project-id" required placeholder="e.g., proj34" maxlength="10">
+        </div>
+
+        <div class="form-group">
+          <label for="project-title">Title *</label>
+          <input type="text" id="project-title" required placeholder="Project Title" maxlength="100">
+        </div>
+
+        <div class="form-group">
+          <label for="project-description">Description *</label>
+          <textarea id="project-description" required placeholder="Project description" rows="5"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="project-image">Image Path *</label>
+          <input type="text" id="project-image" required placeholder="e.g., assets/proj1-800.webp">
+        </div>
+
+        <div class="form-group">
+          <label for="project-alt">Image Alt Text *</label>
+          <input type="text" id="project-alt" required placeholder="Descriptive alt text for the image">
+        </div>
+
+        <div class="form-group">
+          <label for="project-github">GitHub URL *</label>
+          <input type="url" id="project-github" required placeholder="https://github.com/katulevskiy/project-name">
+        </div>
+
+        <div class="form-group">
+          <label for="project-tags">Tags (comma-separated) *</label>
+          <input type="text" id="project-tags" required placeholder="e.g., JavaScript, Web Development, Frontend">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group half">
+            <label for="project-commit-count">Commit Count</label>
+            <input type="number" id="project-commit-count" placeholder="Number of commits" min="0">
+          </div>
+
+          <div class="form-group half">
+            <label for="project-contributors">Contributors</label>
+            <input type="number" id="project-contributors" placeholder="Number of contributors" min="0">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group half">
+            <label for="project-status">Project Status</label>
+            <select id="project-status">
+              <option value="">-- Select Status --</option>
+              <option value="Active">Active</option>
+              <option value="Completed">Completed</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Experimental">Experimental</option>
+            </select>
+          </div>
+
+          <div class="form-group half">
+            <label for="project-license">License Type</label>
+            <select id="project-license">
+              <option value="">-- Select License --</option>
+              <option value="MIT">MIT</option>
+              <option value="GPL-2.0">GPL-2.0</option>
+              <option value="GPL-3.0">GPL-3.0</option>
+              <option value="Apache-2.0">Apache-2.0</option>
+              <option value="BSD-3-Clause">BSD-3-Clause</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="crud-btn create-btn">Create Project</button>
+          <button type="reset" class="crud-btn reset-btn">Reset Form</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Read Projects Panel -->
+    <div id="read-panel" class="crud-panel">
+      <h2>Browse Projects</h2>
+      <div class="project-filter">
+        <input type="text" id="search-projects" placeholder="Search projects...">
+      </div>
+      <div id="projects-list" class="projects-list">
+        <!-- Projects will be loaded here dynamically -->
+        <div class="loading-placeholder">Loading projects...</div>
+      </div>
+    </div>
+
+    <!-- Update Project Panel -->
+    <div id="update-panel" class="crud-panel">
+      <h2>Update Project</h2>
+      <div class="project-selector">
+        <label for="update-project-select">Select Project to Update</label>
+        <select id="update-project-select">
+          <option value="">-- Select a Project --</option>
+          <!-- Options loaded dynamically -->
+        </select>
+      </div>
+
+      <form id="update-form" class="project-form">
+        <!-- Same fields as create form, but populated with selected project data -->
+        <div class="form-group">
+          <label for="update-title">Title *</label>
+          <input type="text" id="update-title" required placeholder="Project Title" maxlength="100">
+        </div>
+
+        <div class="form-group">
+          <label for="update-description">Description *</label>
+          <textarea id="update-description" required placeholder="Project description" rows="5"></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="update-image">Image Path *</label>
+          <input type="text" id="update-image" required placeholder="e.g., assets/proj1-800.webp">
+        </div>
+
+        <div class="form-group">
+          <label for="update-alt">Image Alt Text *</label>
+          <input type="text" id="update-alt" required placeholder="Descriptive alt text for the image">
+        </div>
+
+        <div class="form-group">
+          <label for="update-github">GitHub URL *</label>
+          <input type="url" id="update-github" required placeholder="https://github.com/katulevskiy/project-name">
+        </div>
+
+        <div class="form-group">
+          <label for="update-tags">Tags (comma-separated) *</label>
+          <input type="text" id="update-tags" required placeholder="e.g., JavaScript, Web Development, Frontend">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group half">
+            <label for="update-commit-count">Commit Count</label>
+            <input type="number" id="update-commit-count" placeholder="Number of commits" min="0">
+          </div>
+
+          <div class="form-group half">
+            <label for="update-contributors">Contributors</label>
+            <input type="number" id="update-contributors" placeholder="Number of contributors" min="0">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group half">
+            <label for="update-status">Project Status</label>
+            <select id="update-status">
+              <option value="">-- Select Status --</option>
+              <option value="Active">Active</option>
+              <option value="Completed">Completed</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Experimental">Experimental</option>
+            </select>
+          </div>
+
+          <div class="form-group half">
+            <label for="update-license">License Type</label>
+            <select id="update-license">
+              <option value="">-- Select License --</option>
+              <option value="MIT">MIT</option>
+              <option value="GPL-2.0">GPL-2.0</option>
+              <option value="GPL-3.0">GPL-3.0</option>
+              <option value="Apache-2.0">Apache-2.0</option>
+              <option value="BSD-3-Clause">BSD-3-Clause</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="crud-btn update-btn">Update Project</button>
+          <button type="button" id="cancel-update" class="crud-btn cancel-btn">Cancel</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Delete Project Panel -->
+    <div id="delete-panel" class="crud-panel">
+      <h2>Delete Project</h2>
+      <div class="delete-warning">
+        <p>Warning: Deleting a project cannot be undone. Please be certain before proceeding.</p>
+      </div>
+
+      <div class="project-selector">
+        <label for="delete-project-select">Select Project to Delete</label>
+        <select id="delete-project-select">
+          <option value="">-- Select a Project --</option>
+          <!-- Options loaded dynamically -->
+        </select>
+      </div>
+
+      <div id="delete-preview" class="delete-preview">
+        <!-- Project details will be shown here before deletion -->
+      </div>
+
+      <div class="form-actions">
+        <button id="confirm-delete" class="crud-btn delete-btn" disabled>Delete Project</button>
+        <button id="cancel-delete" class="crud-btn cancel-btn">Cancel</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Notification area for operation results -->
+  <div id="notification" class="notification hidden">
+    <span id="notification-message">Operation completed successfully</span>
+    <button id="close-notification" class="close-btn">&times;</button>
+  </div>
+</main>
+
+<footer>
+  <address>
+    Contact:
+    <a href="mailto:dkatulevskiy@ucsd.edu">dkatulevskiy@ucsd.edu</a>
+  </address>
+  <p>&copy; 2025 Daniil Katulevskiy - Portfolio</p>
+</footer>
+
+<script src="crud.js"></script>
+<script>
+  // Theme toggle script (same as in your other pages)
+  (function () {
+    const toggleButton = document.getElementById("theme-toggle");
+    // Retrieve the saved theme from localStorage, default to light
+    let theme = localStorage.getItem("theme") || "light";
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+      toggleButton.textContent = "🌞"; // Clicking will switch to light
+    } else {
+      document.documentElement.classList.remove("dark");
+      toggleButton.textContent = "🌙"; // Clicking will switch to dark
+    }
+
+    toggleButton.addEventListener("click", () => {
+      if (document.documentElement.classList.contains("dark")) {
+        document.documentElement.classList.remove("dark");
+        localStorage.setItem("theme", "light");
+        toggleButton.textContent = "🌙";
+      } else {
+        document.documentElement.classList.add("dark");
+        localStorage.setItem("theme", "dark");
+        toggleButton.textContent = "🌞";
+      }
+    });
+  })();
+</script>
+</body>
+</html>

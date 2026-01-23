@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Contact Daniil Katulevskiy" />
+    <meta name="author" content="Daniil Katulevskiy" />
+    <title>Contact (JS Enhanced) - Daniil Katulevskiy</title>
+    <!-- Load Montserrat from Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <!-- Existing nav markup -->
+        <a href="#nav" class="nav-toggle-button">&#9776;</a>
+        <div id="nav" class="nav-menu">
+          <a href="#" class="nav-close">&times;</a>
+          <div class="nav-links">
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="about.html">About</a></li>
+              <li><a href="projects.html">Projects</a></li>
+              <li><a href="resume.html">Resume</a></li>
+              <li><a href="contact.html" class="active">Contact</a></li>
+              <li><a href="experiments.html">Experiments</a></li>
+            </ul>
+          </div>
+          <div class="nav-extras">
+            <button
+              id="theme-toggle"
+              aria-label="Toggle dark/light theme"
+              class="theme-toggle"
+            ></button>
+            <ul class="social-links">
+              <li class="social-link">
+                <a href="https://katul-portfolio.netlify.app/" target="_blank">
+                  <img
+                    src="assets/netlify-logo.webp"
+                    alt="Netlify Logo"
+                    class="nav-icon"
+                  />
+                </a>
+              </li>
+              <li class="social-link">
+                <a
+                  href="https://github.com/katulevskiy/cse134-hw3"
+                  target="_blank"
+                >
+                  <img
+                    src="assets/github-logo.webp"
+                    alt="GitHub Logo"
+                    class="nav-icon"
+                  />
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section
+        class="contact-section"
+        style="text-align: center; padding: 2rem"
+      >
+        <h1>Contact Me</h1>
+        <form
+          class="contact-form"
+          action="https://httpbin.org/post"
+          method="post"
+        >
+          <fieldset>
+            <label for="name">Name</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              required
+              pattern="[A-Za-z\s]+"
+              title="Only letters and spaces allowed"
+            />
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required />
+
+            <label for="subject">Subject</label>
+            <input
+              type="text"
+              id="subject"
+              name="subject"
+              pattern="[A-Za-z0-9\s.,'-]*"
+              title="Only letters, numbers, spaces, and basic punctuation allowed"
+            />
+
+            <label for="message">Message</label>
+            <textarea
+              id="message"
+              name="message"
+              rows="5"
+              required
+              minlength="10"
+              maxlength="500"
+            ></textarea>
+
+            <!-- Hidden fields for bot detection and error capture -->
+            <input type="hidden" name="possible_bot" value="false" />
+            <input type="hidden" name="form-errors" value="" />
+
+            <!-- Dedicated output elements for errors and info -->
+            <output id="error-output"></output>
+            <output id="info-output"></output>
+
+            <button type="submit">Send Message</button>
+          </fieldset>
+        </form>
+      </section>
+    </main>
+
+    <footer>
+      <address>
+        Contact:
+        <a href="mailto:dkatulevskiy@ucsd.edu">dkatulevskiy@ucsd.edu</a>
+      </address>
+      <p>&copy; 2025 Daniil Katulevskiy - Portfolio</p>
+    </footer>
+
+    <script>
+      // Global array to capture form errors
+      let form_errors = [];
+
+      // Helper function to flash a field and display an error message.
+      function showError(field, message) {
+        // Add a temporary flash class (ensure .error-flash is defined in styles.css)
+        field.classList.add("error-flash");
+        document.getElementById("error-output").textContent = message;
+        setTimeout(() => {
+          field.classList.remove("error-flash");
+          document.getElementById("error-output").textContent = "";
+        }, 2000);
+        form_errors.push({
+          field: field.id,
+          error: message,
+          value: field.value,
+        });
+      }
+
+      // Masking for the Name field: only letters and spaces.
+      const nameField = document.getElementById("name");
+      nameField.addEventListener("input", function () {
+        const allowed = /^[A-Za-z\s]*$/;
+        if (!allowed.test(this.value)) {
+          // Remove any disallowed characters.
+          const newVal = this.value.replace(/[^A-Za-z\s]/g, "");
+          showError(this, "Illegal character detected in Name.");
+          this.value = newVal;
+        }
+      });
+
+      // Masking for the Subject field.
+      const subjectField = document.getElementById("subject");
+      subjectField.addEventListener("input", function () {
+        const allowed = /^[A-Za-z0-9\s.,'-]*$/;
+        if (!allowed.test(this.value)) {
+          const newVal = this.value.replace(/[^A-Za-z0-9\s.,'-]/g, "");
+          showError(this, "Illegal character detected in Subject.");
+          this.value = newVal;
+        }
+      });
+
+      // Character countdown for the Message textarea.
+      const messageField = document.getElementById("message");
+      messageField.addEventListener("input", function () {
+        const max = 500;
+        const remaining = max - this.value.length;
+        document.getElementById("info-output").textContent =
+          "Characters remaining: " + remaining;
+        // Warn if fewer than 50 characters remain.
+        if (remaining < 50) {
+          this.style.borderColor = "red";
+        } else {
+          this.style.borderColor = "";
+        }
+        if (this.value.length > max) {
+          showError(this, "Character limit exceeded!");
+        }
+      });
+
+      // Custom validation messages using the Constraint Validation API.
+      nameField.addEventListener("invalid", function (e) {
+        e.target.setCustomValidity(
+          "Please enter a valid name (letters and spaces only).",
+        );
+      });
+      nameField.addEventListener("input", function (e) {
+        e.target.setCustomValidity("");
+      });
+
+      const emailField = document.getElementById("email");
+      emailField.addEventListener("invalid", function (e) {
+        e.target.setCustomValidity("Please enter a valid email address.");
+      });
+      emailField.addEventListener("input", function (e) {
+        e.target.setCustomValidity("");
+      });
+
+      messageField.addEventListener("invalid", function (e) {
+        e.target.setCustomValidity(
+          "Message must be between 10 and 500 characters.",
+        );
+      });
+      messageField.addEventListener("input", function (e) {
+        e.target.setCustomValidity("");
+      });
+
+      // Before submitting, attach the captured form errors to the hidden field.
+      const form = document.querySelector(".contact-form");
+      form.addEventListener("submit", function () {
+        document.querySelector('input[name="form-errors"]').value =
+          JSON.stringify(form_errors);
+      });
+    </script>
+    <script>
+      (function () {
+        const toggleButton = document.getElementById("theme-toggle");
+        // Check localStorage for theme; default is light.
+        let theme = localStorage.getItem("theme") || "light";
+        if (theme === "dark") {
+          document.documentElement.classList.add("dark");
+          toggleButton.textContent = "🌞"; // Indicates click to switch to light
+        } else {
+          document.documentElement.classList.remove("dark");
+          toggleButton.textContent = "🌙"; // Indicates click to switch to dark
+        }
+
+        toggleButton.addEventListener("click", () => {
+          if (document.documentElement.classList.contains("dark")) {
+            document.documentElement.classList.remove("dark");
+            localStorage.setItem("theme", "light");
+            toggleButton.textContent = "🌙";
+          } else {
+            document.documentElement.classList.add("dark");
+            localStorage.setItem("theme", "dark");
+            toggleButton.textContent = "🌞";
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>

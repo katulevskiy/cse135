@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Daniil Katulevskiy's Portfolio Home</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script>
+      // Remove no-js class if JavaScript is enabled
+      document.documentElement.classList.remove("no-js");
+    </script>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <!-- Existing nav markup -->
+        <a href="#nav" class="nav-toggle-button">&#9776;</a>
+        <div id="nav" class="nav-menu">
+          <a href="#" class="nav-close">&times;</a>
+          <div class="nav-links">
+            <ul>
+              <li><a href="index.html" class="active">Home</a></li>
+              <li><a href="about.html">About</a></li>
+              <li><a href="projects.html">Projects</a></li>
+              <li><a href="resume.html">Resume</a></li>
+              <li><a href="contact.html">Contact</a></li>
+              <li><a href="experiments.html">Experiments</a></li>
+            </ul>
+          </div>
+          <div class="nav-extras">
+            <button
+              id="theme-toggle"
+              aria-label="Toggle dark/light theme"
+              class="theme-toggle"
+            ></button>
+            <ul class="social-links">
+              <li class="social-link">
+                <a href="https://katul-portfolio.netlify.app/" target="_blank">
+                  <img
+                    src="assets/netlify-logo.webp"
+                    alt="Netlify Logo"
+                    class="nav-icon"
+                  />
+                </a>
+              </li>
+              <li class="social-link">
+                <a
+                  href="https://github.com/katulevskiy/cse134-hw3"
+                  target="_blank"
+                >
+                  <img
+                    src="assets/github-logo.webp"
+                    alt="GitHub Logo"
+                    class="nav-icon"
+                  />
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Hero Section with full-page background (using CSS background) -->
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Welcome</h1>
+        <h2>Daniil Katulevskiy</h2>
+      </div>
+    </section>
+
+    <!-- Featured Project Section using proj3 images -->
+    <section class="featured-project">
+      <h2>Featured Project</h2>
+      <figure>
+        <picture>
+          <source
+            srcset="
+              assets/proj3-480.webp   480w,
+              assets/proj3-800.webp   800w,
+              assets/proj3-1200.webp 1200w
+            "
+            type="image/webp"
+          />
+          <source
+            srcset="
+              assets/proj3-480.jpg   480w,
+              assets/proj3-800.jpg   800w,
+              assets/proj3-1200.jpg 1200w
+            "
+            type="image/jpeg"
+          />
+          <img
+            src="assets/proj3-1200.jpg"
+            alt="Featured Project – Dynamic Solution"
+            style="width: 100%"
+            loading="lazy"
+          />
+        </picture>
+        <figcaption>Featured Project: Dynamic Solution</figcaption>
+      </figure>
+      <p>
+        This project demonstrates my ability to build interactive and responsive
+        web applications using modern web technologies.
+      </p>
+      <a href="https://github.com/katulevskiy/featured-project" class="btn"
+        >View Project on GitHub</a
+      >
+    </section>
+
+    <!-- Projects Section Grid (each tile uses a <picture> element with srcset) -->
+    <section class="projects-grid">
+      <h2>My Projects</h2>
+      <div class="grid-container">
+        <a href="projects.html" class="project-tile">
+          <picture>
+            <source
+              srcset="
+                assets/proj1-480.webp   480w,
+                assets/proj1-800.webp   800w,
+                assets/proj1-1200.webp 1200w
+              "
+              type="image/webp"
+            />
+            <source
+              srcset="
+                assets/proj1-480.jpg   480w,
+                assets/proj1-800.jpg   800w,
+                assets/proj1-1200.jpg 1200w
+              "
+              type="image/jpeg"
+            />
+            <img
+              src="assets/proj1-1200.jpg"
+              alt="Project One – Innovative Web App"
+              style="object-fit: cover; object-position: center"
+              loading="lazy"
+            />
+          </picture>
+          <p>Project One – Innovative Web App</p>
+        </a>
+        <a href="projects.html" class="project-tile">
+          <picture>
+            <source
+              srcset="
+                assets/proj2-480.webp   480w,
+                assets/proj2-800.webp   800w,
+                assets/proj2-1200.webp 1200w
+              "
+              type="image/webp"
+            />
+            <source
+              srcset="
+                assets/proj2-480.jpg   480w,
+                assets/proj2-800.jpg   800w,
+                assets/proj2-1200.jpg 1200w
+              "
+              type="image/jpeg"
+            />
+            <img
+              src="assets/proj2-1200.jpg"
+              alt="Project Two – Creative Design"
+              style="object-fit: cover; object-position: center"
+              loading="lazy"
+            />
+          </picture>
+          <p>Project Two – Creative Design</p>
+        </a>
+        <a href="projects.html" class="project-tile">
+          <picture>
+            <source
+              srcset="
+                assets/proj3-480.webp   480w,
+                assets/proj3-800.webp   800w,
+                assets/proj3-1200.webp 1200w
+              "
+              type="image/webp"
+            />
+            <source
+              srcset="
+                assets/proj3-480.jpg   480w,
+                assets/proj3-800.jpg   800w,
+                assets/proj3-1200.jpg 1200w
+              "
+              type="image/jpeg"
+            />
+            <img
+              src="assets/proj3-1200.jpg"
+              alt="Project Three – Dynamic Solution"
+              style="object-fit: cover; object-position: center"
+              loading="lazy"
+            />
+          </picture>
+          <p>Project Three – Dynamic Solution</p>
+        </a>
+        <a href="projects.html" class="project-tile">
+          <picture>
+            <source
+              srcset="
+                assets/proj4-480.webp   480w,
+                assets/proj4-800.webp   800w,
+                assets/proj4-1200.webp 1200w
+              "
+              type="image/webp"
+            />
+            <source
+              srcset="
+                assets/proj4-480.jpg   480w,
+                assets/proj4-800.jpg   800w,
+                assets/proj4-1200.jpg 1200w
+              "
+              type="image/jpeg"
+            />
+            <img
+              src="assets/proj4-1200.jpg"
+              alt="Project Four – Cutting-edge Technology"
+              style="object-fit: cover; object-position: center"
+              loading="lazy"
+            />
+          </picture>
+          <p>Project Four – Cutting-edge Technology</p>
+        </a>
+      </div>
+    </section>
+
+    <footer>
+      <address>
+        Contact:
+        <a href="mailto:dkatulevskiy@ucsd.edu">dkatulevskiy@ucsd.edu</a>
+      </address>
+      <p>&copy; 2025 Daniil Katulevskiy - Portfolio</p>
+    </footer>
+
+    <script>
+      (function () {
+        const toggleButton = document.getElementById("theme-toggle");
+        // Check localStorage for theme; default is light.
+        let theme = localStorage.getItem("theme") || "light";
+        if (theme === "dark") {
+          document.documentElement.classList.add("dark");
+          toggleButton.textContent = "🌞"; // Indicates click to switch to light
+        } else {
+          document.documentElement.classList.remove("dark");
+          toggleButton.textContent = "🌙"; // Indicates click to switch to dark
+        }
+
+        toggleButton.addEventListener("click", () => {
+          if (document.documentElement.classList.contains("dark")) {
+            document.documentElement.classList.remove("dark");
+            localStorage.setItem("theme", "light");
+            toggleButton.textContent = "🌙";
+          } else {
+            document.documentElement.classList.add("dark");
+            localStorage.setItem("theme", "dark");
+            toggleButton.textContent = "🌞";
+          }
+        });
+      })();
+    </script>
+  </body>
+</html>
