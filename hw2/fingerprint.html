@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fingerprinting Extra Credit</title>
+    <style>
+        body { font-family: sans-serif; max-width: 800px; margin: 2rem auto; padding: 0 1rem; line-height: 1.6; }
+        .card { border: 1px solid #ccc; padding: 1.5rem; border-radius: 8px; background: #f9f9f9; margin-bottom: 1rem; }
+        .btn { padding: 10px 20px; cursor: pointer; background: #007bff; color: white; border: none; border-radius: 4px; }
+        .btn-danger { background: #dc3545; }
+        .btn:hover { opacity: 0.9; }
+        code { background: #eee; padding: 2px 5px; border-radius: 3px; }
+        #status { font-weight: bold; margin-top: 10px; color: #333; }
+        .success { color: green; }
+        .info { color: blue; }
+    </style>
+    <script src="https://openfpcdn.io/fingerprintjs/v4"></script>
+</head>
+<body>
+
+    <h1>Browser Fingerprinting & Session Recovery</h1>
+    <p>This demo shows how we can identify you and restore your data <strong>even if you delete your cookies</strong>.</p>
+
+    <div class="card">
+        <h3>1. Your Identity</h3>
+        <p><strong>Computed Fingerprint (VisitorId):</strong> <span id="fp-display">Loading...</span></p>
+        <p><strong>Current Session Cookie:</strong> <span id="cookie-display">Loading...</span></p>
+    </div>
+
+    <div class="card">
+        <h3>2. Session State</h3>
+        <p><strong>Saved Data on Server:</strong> <span id="server-data">Loading...</span></p>
+        
+        <div style="margin-top: 1rem;">
+            <input type="text" id="user-input" placeholder="Enter some secret data..." style="padding: 8px; width: 60%;">
+            <button class="btn" onclick="saveData()">Save to Session</button>
+        </div>
+        <p id="status"></p>
+    </div>
+
+    <div class="card">
+        <h3>3. Test Re-association</h3>
+        <p>Click this to delete your browser cookies. Usually, this logs you out.</p>
+        <button class="btn btn-danger" onclick="clearCookies()">Delete All Cookies</button>
+        <p><em>After clicking, refresh the page. Your "Session Cookie" will change, but your "Saved Data" should be restored because we recognize your fingerprint.</em></p>
+    </div>
+
+    <script>
+        let visitorId = null;
+
+        // 1. Initialize FingerprintJS
+        const fpPromise = import('https://openfpcdn.io/fingerprintjs/v4')
+            .then(FingerprintJS => FingerprintJS.load());
+
+        // 2. Get the Fingerprint on Load
+        fpPromise
+            .then(fp => fp.get())
+            .then(result => {
+                visitorId = result.visitorId;
+                document.getElementById('fp-display').innerText = visitorId;
+                document.getElementById('fp-display').style.fontWeight = "bold";
+                
+                // Once we have ID, fetch current server state
+                fetchState();
+            });
+
+        // Helper: Show current Cookies
+        function showCookies() {
+            const cookies = document.cookie;
+            document.getElementById('cookie-display').innerText = cookies || "(No Cookies Set)";
+        }
+        showCookies();
+
+        // 3. Fetch State from Server
+        function fetchState() {
+            if (!visitorId) return;
+
+            fetch('fingerprint_api.php?action=load&visitorId=' + visitorId)
+                .then(res => res.json())
+                .then(data => {
+                    const display = document.getElementById('server-data');
+                    if (data.status === 'restored') {
+                        display.innerHTML = `<span class='success'>${data.data} (Restored via Fingerprint!)</span>`;
+                        document.getElementById('status').innerText = "Session restored from fingerprint ID.";
+                        document.getElementById('status').className = "success";
+                    } else if (data.data) {
+                        display.innerText = data.data;
+                    } else {
+                        display.innerText = "(No saved data)";
+                    }
+                    showCookies(); // Refresh cookie display (server might have set one)
+                });
+        }
+
+        // 4. Save Data
+        function saveData() {
+            const val = document.getElementById('user-input').value;
+            if (!val || !visitorId) return;
+
+            const formData = new FormData();
+            formData.append('visitorId', visitorId);
+            formData.append('data', val);
+
+            fetch('fingerprint_api.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('status').innerText = "Data saved securely linked to your Fingerprint.";
+                document.getElementById('status').className = "info";
+                fetchState();
+            });
+        }
+
+        // 5. Clear Cookies (Simulation)
+        function clearCookies() {
+            document.cookie.split(";").forEach(function(c) { 
+                document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); 
+            });
+            showCookies();
+            document.getElementById('status').innerText = "Cookies deleted! Refresh page to test recovery.";
+            document.getElementById('status').className = "info";
+        }
+    </script>
+</body>
+</html>
