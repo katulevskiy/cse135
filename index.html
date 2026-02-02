@@ -10,6 +10,12 @@
         .member-list { list-style: none; padding: 0; }
         .member-card { border: 1px solid #ddd; padding: 15px; margin-bottom: 10px; border-radius: 5px; }
         .hw-links { background: #f4f4f4; padding: 15px; border-radius: 5px; }
+        
+        /* Styles for nested HW lists */
+        .hw-section { margin-top: 10px; margin-bottom: 10px; }
+        .lang-group { margin-bottom: 15px; }
+        .lang-group h4 { margin-bottom: 5px; color: #333; }
+        .lang-group ul { margin-top: 0; }
     </style>
 </head>
 <body>
@@ -26,23 +32,67 @@
                 <strong>Daniil Katulevskiy</strong><br>
                 <a href="/members/dkatulevskiy/index.html">View Portfolio / About Page</a>
             </li>
-            </ul>
+        </ul>
     </section>
 
     <section class="hw-links">
         <h2>Homework Links</h2>
         <ul>
-            <li><strong>HW 1:</strong>
+            <li><strong>HW 1: Client Side Basics</strong>
                 <ul>
                     <li><a href="/hello.php">PHP Info Page</a></li>
                     <li><a href="/report.html">GoAccess Report</a></li>
                 </ul>
             </li>
-        </ul>
-    </section>
 
-    <section>
-      <p>testing automation 2</p>
+            <hr>
+
+            <li class="hw-section"><strong>HW 2: Server-Side Basics</strong>
+                
+                <div class="lang-group">
+                    <h4>Part 1: Perl Demo</h4>
+                    <ul>
+                        <li><a href="hw2/perl-general-echo.pl">Perl General Echo</a></li>
+                    </ul>
+                </div>
+
+                <div class="lang-group">
+                    <h4>Part 2: CGI 3 Ways</h4>
+                    
+                    <h5>Ruby (Interpreted)</h5>
+                    <ul>
+                        <li><a href="hw2/ruby/hello-html-ruby.rb">Hello HTML</a></li>
+                        <li><a href="hw2/ruby/hello-json-ruby.rb">Hello JSON</a></li>
+                        <li><a href="hw2/ruby/environment-ruby.rb">Environment Variables</a></li>
+                        <li><a href="hw2/ruby/echo-ruby.rb">Echo (Direct)</a></li>
+                        <li><a href="hw2/ruby/state-ruby.rb">State Demo</a></li>
+                    </ul>
+
+                    <h5>Go (Compiled)</h5>
+                    <ul>
+                        <li><a href="hw2/go/hello-html-go.cgi">Hello HTML</a></li>
+                        <li><a href="hw2/go/hello-json-go.cgi">Hello JSON</a></li>
+                        <li><a href="hw2/go/environment-go.cgi">Environment Variables</a></li>
+                        <li><a href="hw2/go/echo-go.cgi">Echo (Direct)</a></li>
+                        <li><a href="hw2/go/state-go.cgi">State Demo</a></li>
+                    </ul>
+
+                    <h5>Rust (Compiled)</h5>
+                    <ul>
+                        <li><a href="hw2/rust/hello-html-rust.cgi">Hello HTML</a></li>
+                        <li><a href="hw2/rust/hello-json-rust.cgi">Hello JSON</a></li>
+                        <li><a href="hw2/rust/environment-rust.cgi">Environment Variables</a></li>
+                        <li><a href="hw2/rust/echo-rust.cgi">Echo (Direct)</a></li>
+                        <li><a href="hw2/rust/state-rust.cgi">State Demo</a></li>
+                    </ul>
+
+                    <h5>Universal Tester</h5>
+                    <ul>
+                        <li><a href="hw2/echo_test.html"><strong>Echo Form Test Page (JS)</strong></a></li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
     </section>
 
     <footer>
@@ -50,7 +100,6 @@
     </footer>
 
 </body>
-<!-- Matomo -->
 <script>
   var _paq = window._paq = window._paq || [];
   /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
@@ -64,5 +113,4 @@
     g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
   })();
 </script>
-<!-- End Matomo Code -->
 </html>
