@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HW2 Echo Test</title>
+    <style>
+        body { font-family: sans-serif; max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
+        label { display: inline-block; width: 150px; font-weight: bold; }
+        select, input { padding: 5px; margin-bottom: 15px; width: 300px; }
+        button { padding: 10px 20px; cursor: pointer; background: #007bff; color: white; border: none; border-radius: 4px; }
+        button:hover { background: #0056b3; }
+        hr { margin: 2rem 0; }
+        .response-box { background: #f4f4f4; padding: 1rem; border: 1px solid #ddd; margin-top: 1rem; }
+    </style>
+</head>
+<body>
+    <h1>Echo Test Form</h1>
+    <p>Use this form to test the Echo scripts in different languages.</p>
+
+    <noscript>
+        <div style="background: #xffeeba; border: 1px solid #ffdf70; padding: 1rem; margin-bottom: 1rem;">
+            <h3>JavaScript is Off</h3>
+            <p>The dynamic form requires JavaScript. Please use these direct links to test the GET method manually:</p>
+            <ul>
+                <li><a href="ruby/echo-ruby.rb?test_data=Manual+Ruby+Test">Test Ruby Echo (GET)</a></li>
+                <li><a href="go/echo-go.cgi?test_data=Manual+Go+Test">Test Go Echo (GET)</a></li>
+                <li><a href="rust/echo-rust.cgi?test_data=Manual+Rust+Test">Test Rust Echo (GET)</a></li>
+            </ul>
+        </div>
+    </noscript>
+
+    <form id="echoForm">
+        <label for="langSelect">Language Endpoint:</label>
+        <select id="langSelect">
+            <option value="ruby/echo-ruby.rb">Ruby (hw2/ruby/)</option>
+            <option value="go/echo-go.cgi">Go (hw2/go/)</option>
+            <option value="rust/echo-rust.cgi">Rust (hw2/rust/)</option>
+        </select>
+        <br>
+
+        <label for="methodSelect">HTTP Method:</label>
+        <select id="methodSelect">
+            <option value="GET">GET</option>
+            <option value="POST">POST</option>
+            <option value="PUT">PUT</option>
+            <option value="DELETE">DELETE</option>
+        </select>
+        <br>
+
+        <label for="encodingSelect">Encoding:</label>
+        <select id="encodingSelect">
+            <option value="application/x-www-form-urlencoded">Form URL Encoded</option>
+            <option value="application/json">JSON</option>
+        </select>
+        <br>
+
+        <label for="test_data">Data to Send:</label>
+        <input type="text" id="test_data" name="test_data" value="Hello World">
+        <br>
+
+        <button type="button" onclick="submitForm()">Send Request</button>
+    </form>
+
+    <div id="responseContainer"></div>
+
+    <script>
+        function submitForm() {
+            const form = document.getElementById('echoForm');
+            const lang = document.getElementById('langSelect').value;
+            const method = document.getElementById('methodSelect').value;
+            const encoding = document.getElementById('encodingSelect').value;
+            const dataVal = document.getElementById('test_data').value;
+            const container = document.getElementById('responseContainer');
+            
+            container.innerHTML = "Processing...";
+
+            if (encoding === "application/x-www-form-urlencoded" && (method === "GET" || method === "POST")) {
+                form.action = lang;
+                form.method = method;
+                form.enctype = encoding;
+                form.submit();
+            } 
+
+            else {
+                let options = {
+                    method: method,
+                    headers: {
+                        'Content-Type': encoding
+                    }
+                };
+
+                if (method !== 'GET' && method !== 'HEAD') {
+                    if (encoding === 'application/json') {
+                        options.body = JSON.stringify({ test_data: dataVal });
+                    } else {
+                        // x-www-form-urlencoded for PUT/DELETE
+                        options.body = "test_data=" + encodeURIComponent(dataVal);
+                    }
+                } else {
+                    // For GET, append to URL
+                    // Note: This logic here is for the fetch display, 
+                    // though the form usually handles GET params automatically.
+                }
+
+                fetch(lang, options)
+                .then(response => response.text())
+                .then(html => {
+                    container.innerHTML = "<h2>Response from Server:</h2><div class='response-box'>" + html + "</div>";
+                })
+                .catch(err => {
+                    container.innerHTML = "<h2>Error:</h2><p>" + err + "</p>";
+                });
+            }
+        }
+    </script>
+</body>
+</html>
