@@ -14,8 +14,10 @@
         #status { font-weight: bold; margin-top: 10px; color: #333; }
         .success { color: green; }
         .info { color: blue; }
+        .error { color: red; }
     </style>
-    <script src="https://openfpcdn.io/fingerprintjs/v4"></script>
+    
+    <script src="fp.js"></script>
 </head>
 <body>
 
@@ -49,30 +51,38 @@
     <script>
         let visitorId = null;
 
-        // 1. Initialize FingerprintJS
-        const fpPromise = import('https://openfpcdn.io/fingerprintjs/v4')
-            .then(FingerprintJS => FingerprintJS.load());
-
-        // 2. Get the Fingerprint on Load
-        fpPromise
-            .then(fp => fp.get())
-            .then(result => {
+        // 1. Initialize using the global variable
+        // The script loads 'FingerprintJS' into the window object automatically
+        const initFingerprint = async () => {
+            try {
+                if (typeof FingerprintJS === 'undefined') {
+                    throw new Error("Library failed to load. Ad-blocker might be active.");
+                }
+                
+                const fp = await FingerprintJS.load();
+                const result = await fp.get();
+                
                 visitorId = result.visitorId;
                 document.getElementById('fp-display').innerText = visitorId;
                 document.getElementById('fp-display').style.fontWeight = "bold";
+                document.getElementById('fp-display').className = "success";
                 
-                // Once we have ID, fetch current server state
+                // Fetch server state
                 fetchState();
-            });
+            } catch (error) {
+                console.error(error);
+                document.getElementById('fp-display').innerText = "Error: " + error.message;
+                document.getElementById('fp-display').className = "error";
+            }
+        };
 
         // Helper: Show current Cookies
         function showCookies() {
             const cookies = document.cookie;
             document.getElementById('cookie-display').innerText = cookies || "(No Cookies Set)";
         }
-        showCookies();
 
-        // 3. Fetch State from Server
+        // 2. Fetch State from Server
         function fetchState() {
             if (!visitorId) return;
 
@@ -89,11 +99,12 @@
                     } else {
                         display.innerText = "(No saved data)";
                     }
-                    showCookies(); // Refresh cookie display (server might have set one)
-                });
+                    showCookies(); // Refresh cookie display
+                })
+                .catch(err => console.error("API Error:", err));
         }
 
-        // 4. Save Data
+        // 3. Save Data
         function saveData() {
             const val = document.getElementById('user-input').value;
             if (!val || !visitorId) return;
@@ -114,7 +125,7 @@
             });
         }
 
-        // 5. Clear Cookies (Simulation)
+        // 4. Clear Cookies
         function clearCookies() {
             document.cookie.split(";").forEach(function(c) { 
                 document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); 
@@ -123,6 +134,10 @@
             document.getElementById('status').innerText = "Cookies deleted! Refresh page to test recovery.";
             document.getElementById('status').className = "info";
         }
+
+        // Start
+        showCookies();
+        initFingerprint();
     </script>
 </body>
 </html>
